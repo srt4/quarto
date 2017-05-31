@@ -19,7 +19,7 @@ public class QuartoBoard {
     }
 
     public QuartoPiece getPieceAtCell(final int x, final int y) {
-        return isOccupied(x, y) ? board[x][y] : null;
+        return board[x][y];
     }
 
     public boolean isOccupied(final int x, final int y) {
