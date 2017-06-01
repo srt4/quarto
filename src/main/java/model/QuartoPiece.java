@@ -36,4 +36,9 @@ public abstract class QuartoPiece {
         return fill;
     }
 
+    @Override
+    public String toString() {
+        return PieceToStringHelper.toString(this);
+    }
+
 }
