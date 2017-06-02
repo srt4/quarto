@@ -30,6 +30,7 @@ public class QuartoGame {
     public Player play() {
         Player currentPlayer = p1;
         QuartoPiece piece = null;
+        Coordinates coords;
 
         piece = currentPlayer.selectPiece(availablePieces);
         currentPlayer = (currentPlayer == p1 ? p2 : p1);
@@ -37,12 +38,14 @@ public class QuartoGame {
         while (!winConditionMet()) {
             // current player places the piece chose by previous player
             // TODO: Could this be a 'validateMove()' function?
+            // TODO: What if the player just keeps making the same move? Cap
+            // the number of tries? Mayb
             while (true) {
-                Move nextMove = currentPlayer.makeMove(piece, ImmutableQuartoBoard.copyOf(board));   // TODO: Do we need to pass board here? What about in player CTOR?
-                if (!board.isOccupied(nextMove.getX(), nextMove.GetY()))
+                coords = currentPlayer.selectCoordinates(piece, ImmutableQuartoBoard.copyOf(board));   // TODO: Do we need to pass board here? What about in player CTOR?
+                if (!board.isOccupied(coords.getX(), coords.getY()))
                     break;
                 else
-                    System.out.println("Cell occupied");
+                    System.out.println("Coordinates occupied");
             }
 
             // current player chooses piece from available peices for next player
@@ -55,12 +58,20 @@ public class QuartoGame {
                     System.out.println("Piece unavailable");
             }
 
+            board.placePiece(piece, coords.getX(), coords.getY());
+            availablePieces.remove(piece);
+
             currentPlayer = (currentPlayer == p1 ? p2 : p1);
 
             // TODO: Check if there no pieces left
         }
 
         return currentPlayer;
+    }
+
+    private boolean winConditionMet() {
+        // TODO: implement this
+        return true;
     }
 
 }

@@ -17,15 +17,19 @@ public class CliPlayer implements Player {
         this.sc = new Scanner(System.in);
     }
 
-    public QuartoPiece selectPiece() {
+    public QuartoPiece selectPiece(QuartoPieces pieces) {
         System.out.println("Select piece: ");
         //TODO: Use a function to map an integer to available pieces
         //return someMapFunction(sc.nextInt());
         return new QuartoPiece(Hue.LIGHT, Height.TALL, Fill.HOLLOW, Shape.CUBE);
     }
 
-    public int selectCoord(String axis, int min, int max) {
-        int value = -1;
+    public Coordinates selectCoordinates(QuartoPiece piece, QuartoBoard board) {
+        return new Coordinates(selectCoord("X", 0, board.getDimensionX()), selectCoord("Y", 0, board.getDimensionY()));
+    }
+
+    private int selectCoord(String axis, int min, int max) {
+        int value = 1;
 
         while (value == -1) {
             System.out.println("Select '" + axis + "' coordinate: ");

@@ -7,9 +7,13 @@ import java.util.Arrays;
 public class QuartoBoard {
 
     private final QuartoPiece[][] board;
+    private final int dimensionX;
+    private final int dimensionY;
 
     public QuartoBoard() {
-        this.board = new QuartoPiece[4][4];
+        this.dimensionX = 4;
+        this.dimensionY = 4;
+        this.board = new QuartoPiece[dimensionX][dimensionY];
     }
 
     public QuartoPiece[][] getBoard() {
@@ -46,6 +50,14 @@ public class QuartoBoard {
     @Override
     public String toString() {
         return "QuartoBoard<" + hashCode() + ">\n" + printBoard();
+    }
+
+    public int getDimensionX() {
+        return dimensionX;
+    }
+
+    public int getDimensionY() {
+        return dimensionY;
     }
 
 }
