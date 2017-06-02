@@ -1,5 +1,7 @@
 package model;
 
+import com.google.common.base.Strings;
+
 import java.util.Arrays;
 
 public class QuartoBoard {
@@ -24,6 +26,26 @@ public class QuartoBoard {
 
     public void placePiece(final QuartoPiece piece, final int x, final int y) {
         board[x][y] = piece;
+    }
+
+    public String printBoard() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("  ").append(Strings.repeat("-", 19)).append("\n");
+        for (int y = 0; y < board.length; y++) {
+            for (int x = 0; x < board[y].length; x++) {
+                sb.append(" | ").append(board[y][x]);
+                if (x == board[y].length - 1) {
+                    sb.append(" | ");
+                }
+            }
+            sb.append("\n  ").append(Strings.repeat("-", 19)).append("\n");
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public String toString() {
+        return "QuartoBoard<" + hashCode() + ">\n" + printBoard();
     }
 
 }

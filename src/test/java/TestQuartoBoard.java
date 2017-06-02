@@ -31,9 +31,7 @@ public class TestQuartoBoard {
             }
         }
 
-        for (final QuartoPiece[] row : board.getBoard()) {
-            System.out.println(Arrays.toString(row));
-        }
+        System.out.println(board);
     }
 
     @Test
