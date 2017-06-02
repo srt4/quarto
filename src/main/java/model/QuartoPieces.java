@@ -32,7 +32,7 @@ public class QuartoPieces {
             for (final Height height : Height.values()) {
                 for (final Hue hue : Hue.values()) {
                     for (final Shape shape : Shape.values()) {
-                        pieces.add(PieceFactory.createPiece(shape, fill, height, hue));
+                        pieces.add(new QuartoPiece(hue, height, fill, shape));
                     }
                 }
             }

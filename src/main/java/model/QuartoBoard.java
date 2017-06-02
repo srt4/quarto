@@ -2,10 +2,6 @@ package model;
 
 import java.util.Arrays;
 
-/**
- *
- * @author Spencer Thomas (srt4@uw.edu)
- */
 public class QuartoBoard {
 
     private final QuartoPiece[][] board;

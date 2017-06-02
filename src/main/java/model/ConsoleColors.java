@@ -1,9 +1,5 @@
 package model;
 
-/**
- *
- * @author Spencer Thomas (srt4@uw.edu)
- */
 final class ConsoleColors {
 
     static final String ANSI_RESET = "\u001B[0m";

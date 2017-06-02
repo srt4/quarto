@@ -1,9 +1,5 @@
 package model;
 
-/**
- *
- * @author Spencer Thomas (srt4@uw.edu)
- */
 final class PieceToStringHelper {
 
     static String toString(final QuartoPiece piece) {
