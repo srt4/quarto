@@ -11,7 +11,6 @@ import model.attribute.Shape;
 
 import java.util.List;
 import java.util.Set;
-import java.util.Iterator;
 
 public class QuartoPieces {
 
