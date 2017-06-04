@@ -25,7 +25,9 @@ public class CliPlayer implements Player {
     }
 
     public Coordinates selectCoordinates(QuartoPiece piece, QuartoBoard board) {
-        return new Coordinates(selectCoord("X", 0, board.getDimensionX()), selectCoord("Y", 0, board.getDimensionY()));
+        int x = selectCoord("X", 0, board.getDimensionX());
+        int y = selectCoord("Y", 0, board.getDimensionY());
+        return new Coordinates(x, y);
     }
 
     private int selectCoord(String axis, int min, int max) {
