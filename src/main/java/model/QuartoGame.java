@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Scanner;
+
 public class QuartoGame {
     
     private final QuartoBoard board;
@@ -10,8 +12,8 @@ public class QuartoGame {
     public QuartoGame() {
         this.board = new QuartoBoard();
         this.availablePieces = new QuartoPieces();
-        this.p1 = new CliPlayer();
-        this.p2 = new CliPlayer();
+        this.p1 = new CliPlayer(new Scanner(System.in)); // TODO: Is there where you'd have a factory?
+        this.p2 = new CliPlayer(new Scanner(System.in));
     }
 
     public void makeTurn(final QuartoPiece piece, final int x, final int y) {

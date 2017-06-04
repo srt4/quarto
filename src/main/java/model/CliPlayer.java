@@ -13,8 +13,8 @@ public class CliPlayer implements Player {
 
     private final Scanner sc;
 
-    public CliPlayer() {
-        this.sc = new Scanner(System.in);
+    public CliPlayer(Scanner scanner) {
+        this.sc = scanner;
     }
 
     public QuartoPiece selectPiece(QuartoPieces pieces) {
@@ -25,28 +25,21 @@ public class CliPlayer implements Player {
     }
 
     public Coordinates selectCoordinates(QuartoPiece piece, QuartoBoard board) {
-        int x = selectCoord("X", 0, board.getDimensionX());
-        int y = selectCoord("Y", 0, board.getDimensionY());
+        int x = 0, y = 0;
+
+        System.out.println(String.format("Select coordinates for %s piece: x, y\n", piece.toString()));
+        x = getIntInBounds(0, board.getDimensionX());
+        y = getIntInBounds(0, board.getDimensionY());
+
         return new Coordinates(x, y);
     }
 
-    private int selectCoord(String axis, int min, int max) {
-        int value = 0;
-
-        while (true) {
-            System.out.println("Select '" + axis + "' coordinate: ");
-            try {
-                value = sc.nextInt();
-                if (value < min || value > max)
-                    throw new InputMismatchException();
-                else
-                    break;
-            } catch (InputMismatchException e) {
-                System.out.println(String.format("'%s' must be in range: [%s - %s]", axis, min, max));
-            }
-        }
-
-        return value;
+    private int getIntInBounds(int min, int max) {
+        int value = sc.nextInt();
+        if (value < min || value > max)
+            throw new InputMismatchException(String.format("Coordinate must be in range: [%d - %d]", min, max));
+        else
+            return value;
     }
 
 }
