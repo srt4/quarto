@@ -29,14 +29,16 @@ public class CliPlayer implements Player {
     }
 
     private int selectCoord(String axis, int min, int max) {
-        int value = 1;
+        int value = 0;
 
-        while (value == -1) {
+        while (true) {
             System.out.println("Select '" + axis + "' coordinate: ");
             try {
                 value = sc.nextInt();
                 if (value < min || value > max)
                     throw new InputMismatchException();
+                else
+                    break;
             } catch (InputMismatchException e) {
                 System.out.println(String.format("'%s' must be in range: [%s - %s]", axis, min, max));
             }
