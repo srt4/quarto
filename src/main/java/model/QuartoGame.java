@@ -29,7 +29,7 @@ public class QuartoGame {
         availablePieces.remove(piece);
     }
 
-    public Player play() {
+    public int play() {
         Player currentPlayer = p1;
         QuartoPiece piece = null;
         Coordinates coords;
@@ -43,7 +43,7 @@ public class QuartoGame {
             // TODO: What if the player just keeps making the same move? Cap
             // the number of tries? Mayb
             while (true) {
-                coords = currentPlayer.selectCoordinates(piece, ImmutableQuartoBoard.copyOf(board));   // TODO: Do we need to pass board here? What about in player CTOR?
+                coords = currentPlayer.selectCoordinates(piece, ImmutableQuartoBoard.copyOf(board));
                 if (!board.isOccupied(coords.getX(), coords.getY()))
                     break;
                 else
@@ -68,12 +68,12 @@ public class QuartoGame {
             // TODO: Check if there no pieces left
         }
 
-        return currentPlayer;
+        return 0;
     }
 
     private boolean winConditionMet() {
         // TODO: implement this
-        return true;
+        return false;
     }
 
 }

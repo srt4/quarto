@@ -31,3 +31,6 @@ dependencies {
 // Define the main class for the application
 mainClassName = 'App'
 
+run {
+    standardInput = System.in
+}
