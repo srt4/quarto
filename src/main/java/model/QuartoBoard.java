@@ -25,11 +25,11 @@ public class QuartoBoard {
     }
 
     public boolean isOccupied(final int x, final int y) {
-        return board[x][y] != null;
+        return board[x - 1][y - 1] != null;
     }
 
     public void placePiece(final QuartoPiece piece, final int x, final int y) {
-        board[x][y] = piece;
+        board[x - 1][y - 1] = piece;
     }
 
     public String printBoard() {
@@ -37,7 +37,7 @@ public class QuartoBoard {
         sb.append("  ").append(Strings.repeat("-", 19)).append("\n");
         for (int y = 0; y < board.length; y++) {
             for (int x = 0; x < board[y].length; x++) {
-                sb.append(" | ").append(board[y][x]);
+                sb.append(" | ").append(board[y][x] ==  null ? "  " : board[y][x]);
                 if (x == board[y].length - 1) {
                     sb.append(" | ");
                 }

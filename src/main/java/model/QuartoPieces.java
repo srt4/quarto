@@ -9,15 +9,20 @@ import model.attribute.Height;
 import model.attribute.Hue;
 import model.attribute.Shape;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Consumer;
 
-public class QuartoPieces {
+public class QuartoPieces implements Iterable<QuartoPiece> {
 
-    private final Set<QuartoPiece> pieces;
+    private final SortedSet<QuartoPiece> pieces;
 
     public QuartoPieces() {
-        this.pieces = Sets.newHashSet();
+        this.pieces = Sets.newTreeSet(new Comparator<QuartoPiece>() {
+            @Override
+            public int compare(QuartoPiece o1, QuartoPiece o2) {
+                return o1.getBitmask() - o2.getBitmask();
+            }
+        });
         this.pieces.addAll(createAllPieces());
     }
 
@@ -45,6 +50,21 @@ public class QuartoPieces {
 
     public boolean contains(final QuartoPiece piece) {
         return pieces.contains(piece);
+    }
+
+    @Override
+    public Iterator<QuartoPiece> iterator() {
+        return pieces.iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super QuartoPiece> action) {
+        pieces.forEach(action);
+    }
+
+    @Override
+    public Spliterator<QuartoPiece> spliterator() {
+        return pieces.spliterator();
     }
 
 }

@@ -50,10 +50,10 @@ public class QuartoPiece {
     }
 
     private int generateBitmask() {
-        return (height.ordinal()) +
-                        (fill.ordinal() << 1) +
-                        (hue.ordinal() << 2) +
-                        (shape.ordinal() << 3);
+        return (1 << (fill.ordinal())) +
+                (1 << (2 + height.ordinal())) +
+                (1 << (4 + shape.ordinal())) +
+                (1 << (6 + hue.ordinal()));
     }
 
 }

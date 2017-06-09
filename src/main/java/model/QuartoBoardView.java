@@ -5,21 +5,22 @@ import java.util.Arrays;
 /**
  * A view of a QuartoBoard with no modifications possible.
  */
-public class ImmutableQuartoBoard extends QuartoBoard {
+public class QuartoBoardView extends QuartoBoard {
 
     private final QuartoBoard source;
 
-    public static ImmutableQuartoBoard copyOf(final QuartoBoard source) {
-        return new ImmutableQuartoBoard(source);
+    public static QuartoBoardView of(final QuartoBoard source) {
+        return new QuartoBoardView(source);
     }
 
-    private ImmutableQuartoBoard(final QuartoBoard source) {
+    private QuartoBoardView(final QuartoBoard source) {
         this.source = source;
     }
 
     @Override
     public QuartoPiece[][] getBoard() {
-        return Arrays.copyOf(source.getBoard(), source.getBoard().length);
+        // TODO make a copy of this
+        return source.getBoard();
     }
 
     @Override

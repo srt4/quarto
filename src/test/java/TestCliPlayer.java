@@ -36,7 +36,7 @@ public class TestCliPlayer {
         String input = "-1,1";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Scanner scanner = new Scanner(System.in);
-        CliPlayer player = new CliPlayer(scanner); // Can't put in 'setup()' -- needs input stream in CTOR
+        CliPlayer player = new CliPlayer(scanner, "P1"); // Can't put in 'setup()' -- needs input stream in CTOR
 
         player.selectCoordinates(piece, board);
     }
