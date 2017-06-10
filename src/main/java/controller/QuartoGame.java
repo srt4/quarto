@@ -1,34 +1,35 @@
 package controller;
 
-import controller.CliPlayer;
-import controller.Player;
 import model.Coordinates;
 import model.QuartoBoard;
 import model.QuartoBoardView;
 import model.QuartoPiece;
 import model.QuartoPieces;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 public class QuartoGame {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     private final QuartoBoard board;
     private final QuartoPieces availablePieces;
     private final Player p1;
     private final Player p2;
-    
+
+    public QuartoGame(final Player player1, final Player player2) {
+        this.board = new QuartoBoard();
+        this.availablePieces = new QuartoPieces();
+        this.p1 = player1;
+        this.p2 = player2;
+    }
+
     public QuartoGame() {
         this.board = new QuartoBoard();
         this.availablePieces = new QuartoPieces();
         this.p1 = new CliPlayer(new Scanner(System.in), "P1"); // TODO: Is there where you'd have a factory?
-        this.p2 = new CliPlayer(new Scanner(System.in), "P2");
+        this.p2 = new DillyPlayer();
     }
 
-    public int play() {
+    public void play() {
         Player currentPlayer = p1;
         Player previousPlayer = p2;
 
@@ -50,8 +51,6 @@ public class QuartoGame {
         }
 
         System.out.println("Winning player is " + (previousPlayer == p1 ? "P1!" : "P2!"));
-
-        return 0;
     }
 
     private Coordinates selectCoordinates(final QuartoPiece piece, final QuartoBoard board, final Player player) {
