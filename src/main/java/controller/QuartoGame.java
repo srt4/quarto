@@ -1,9 +1,21 @@
-package model;
+package controller;
+
+import controller.CliPlayer;
+import controller.Player;
+import model.Coordinates;
+import model.QuartoBoard;
+import model.QuartoBoardView;
+import model.QuartoPiece;
+import model.QuartoPieces;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Scanner;
 
 public class QuartoGame {
-    
+
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private final QuartoBoard board;
     private final QuartoPieces availablePieces;
     private final Player p1;
@@ -16,59 +28,50 @@ public class QuartoGame {
         this.p2 = new CliPlayer(new Scanner(System.in), "P2");
     }
 
-    public void makeTurn(final QuartoPiece piece, final int x, final int y) {
-        if (!availablePieces.contains(piece)) {
-            throw new IllegalArgumentException("Piece cannot be played as it is not available.");
-        }
-
-        if (board.isOccupied(x, y)) {
-            throw new IllegalArgumentException("Piece cannot be played as space is occupied. Occupant=" + board.getPieceAtCell(x, y));
-        }
-        
-        board.placePiece(piece, x, y);
-        availablePieces.remove(piece);
-    }
-
     public int play() {
         Player currentPlayer = p1;
-        QuartoPiece piece = null;
-        Coordinates coords;
+        Player previousPlayer = p2;
 
-        piece = currentPlayer.selectPiece(availablePieces.get(), (board));
-        currentPlayer = (currentPlayer == p1 ? p2 : p1);
-
+        /**
+         * Flow of a move:
+         *  - Previous player selects piece for current player
+         *  - Current player places piece on board
+         */
         while (!winConditionMet()) {
-            // current player places the piece chose by previous player
-            // TODO: Could this be a 'validateMove()' function?
-            // TODO: What if the player just keeps making the same move? Cap
-            // the number of tries? Mayb
-            while (true) {
-                coords = currentPlayer.selectCoordinates(piece, (board));
-                if (!board.isOccupied(coords.getX(), coords.getY()))
-                    break;
-                else
-                    System.out.println("Coordinates occupied");
-            }
+            final QuartoPiece selectedPiece = selectPiece(availablePieces, QuartoBoardView.of(board), previousPlayer);
 
-            // current player chooses piece from available peices for next player
-            // TODO: Could this be a 'validatePiece()' function?
-            while (true) {
-                piece = currentPlayer.selectPiece(availablePieces.get(), (board));
-                if (availablePieces.contains(piece))
-                    break;
-                else
-                    System.out.println("Piece unavailable");
-            }
+            final Coordinates move = selectCoordinates(selectedPiece, QuartoBoardView.of(board), currentPlayer);
+            board.placePiece(selectedPiece, move);
+            availablePieces.remove(selectedPiece);
 
-            board.placePiece(piece, coords.getX(), coords.getY());
-            availablePieces.remove(piece);
-
-            currentPlayer = (currentPlayer == p1 ? p2 : p1);
-
-            // TODO: Check if there no pieces left
+            Player swap = currentPlayer;
+            currentPlayer = previousPlayer;
+            previousPlayer = swap;
         }
 
+        System.out.println("Winning player is " + (previousPlayer == p1 ? "P1!" : "P2!"));
+
         return 0;
+    }
+
+    private Coordinates selectCoordinates(final QuartoPiece piece, final QuartoBoard board, final Player player) {
+        Coordinates coordinates;
+
+        while (board.isOccupied((coordinates = player.selectCoordinates(piece, QuartoBoardView.of(board))))) {
+            System.out.println("Coordinates occupied");
+        }
+
+        return coordinates;
+    }
+
+    private QuartoPiece selectPiece(final QuartoPieces pieces, final QuartoBoard board, final Player player) {
+        QuartoPiece piece;
+
+        while (!pieces.contains((piece = player.selectPiece(pieces.get(), board)))) {
+            System.out.println("Piece unavailable");
+        }
+
+        return piece;
     }
 
     private boolean winConditionMet() {
@@ -87,7 +90,6 @@ public class QuartoGame {
             }
 
             if (sum > 0) {
-                System.out.println("Win found");
                 return true;
             }
         }
@@ -105,7 +107,6 @@ public class QuartoGame {
             }
 
             if (sum > 0) {
-                System.out.println("Win found");
                 return true;
             }
         }
@@ -122,7 +123,6 @@ public class QuartoGame {
             }
 
             if (sum > 0) {
-                System.out.println("Win found");
                 return true;
             }
         }
@@ -134,15 +134,10 @@ public class QuartoGame {
                     break;
                 }
 
-                System.out.println("Testing diagonal: ");
-                System.out.println("x = " + x);
-                System.out.println("y = " + y);
-                System.out.println(quartoBoard[x][y]);
                 sum &= quartoBoard[x][y].getBitmask();
             }
 
             if (sum > 0) {
-                System.out.println("Win found");
                 return true;
             }
         }

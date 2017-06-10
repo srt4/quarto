@@ -1,4 +1,8 @@
-package model;
+package controller;
+
+import model.Coordinates;
+import model.QuartoBoard;
+import model.QuartoPiece;
 
 import java.util.List;
 

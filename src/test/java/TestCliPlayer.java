@@ -1,4 +1,5 @@
-import model.CliPlayer;
+import controller.CliPlayer;
+import model.Coordinates;
 import model.QuartoBoard;
 import model.QuartoPiece;
 import model.attribute.Fill;
@@ -25,20 +26,15 @@ public class TestCliPlayer {
         this.board = new QuartoBoard();
     }
 
-    @After
-    public void tearDown() {
-        System.setIn(System.in);
-    }
+    @Test
+    public void testSelectCoordinates() {
+        String input = "B\n1\n";
+        Scanner scanner = new Scanner(new ByteArrayInputStream(input.getBytes()));
+        CliPlayer player = new CliPlayer(scanner, "P1");
 
-    // TODO: Discuss exception based unit tests
-    @Test(expected=InputMismatchException.class)
-    public void testSelectCoordinatesThrowsIfBelowLowerBound() {
-        String input = "-1,1";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-        Scanner scanner = new Scanner(System.in);
-        CliPlayer player = new CliPlayer(scanner, "P1"); // Can't put in 'setup()' -- needs input stream in CTOR
-
-        player.selectCoordinates(piece, board);
+        Coordinates selectedCoordinates = player.selectCoordinates(piece, board);
+        Assert.assertEquals(2, selectedCoordinates.getX());
+        Assert.assertEquals(1, selectedCoordinates.getY());
     }
 
 }

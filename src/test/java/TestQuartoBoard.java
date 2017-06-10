@@ -1,3 +1,4 @@
+import model.Coordinates;
 import model.QuartoBoard;
 import model.QuartoPiece;
 import model.QuartoPieces;
@@ -25,9 +26,9 @@ public class TestQuartoBoard {
     public void testPopulateBoard() {
         final QuartoPieces pieces = new QuartoPieces();
 
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 4; y++) {
-                board.placePiece(pieces.get().get(x + (4 * y)), x, y);
+        for (int x = 1; x <= 4; x++) {
+            for (int y = 1; y <= 4; y++) {
+                board.placePiece(pieces.get().get(x + (4 * (y - 1)) - 1), new Coordinates(x, y));
             }
         }
 
@@ -36,21 +37,26 @@ public class TestQuartoBoard {
 
     @Test
     public void testOccupiedSpaceIsOccupied() {
-        board.placePiece(new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE), 3, 2);
-        Assert.assertTrue(board.isOccupied(3, 2));
+        board.placePiece(new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE), new Coordinates(3, 2));
+        Assert.assertTrue(board.isOccupied(new Coordinates(3, 2)));
     }
 
     @Test
     public void testUnoccupiedSpaceIsNotOccupied() {
-        board.placePiece(new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE), 3, 2);
-        Assert.assertFalse(board.isOccupied(1, 1));
+        board.placePiece(new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE), new Coordinates(3, 2));
+        Assert.assertFalse(board.isOccupied(new Coordinates(1, 1)));
     }
 
-    @Ignore
     @Test(expected = IllegalArgumentException.class)
     public void testOccupiedSpaceCannotPlace() {
-        board.placePiece(new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE), 3, 2);
-        board.placePiece(new QuartoPiece(Hue.DARK, Height.SHORT, Fill.FILLED, Shape.CUBE), 3, 2);
+        board.placePiece(new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE), new Coordinates(3, 2));
+        board.placePiece(new QuartoPiece(Hue.DARK, Height.SHORT, Fill.FILLED, Shape.CUBE), new Coordinates(3, 2));
+    }
+
+    @Test
+    public void testPrintBoard() {
+        testPopulateBoard();
+        Assert.assertNotNull(board.printBoard());
     }
 
 }

@@ -4,6 +4,7 @@ import model.attribute.Fill;
 import model.attribute.Height;
 import model.attribute.Hue;
 import model.attribute.Shape;
+import model.util.PieceToStringHelper;
 
 /**
  * Represents a QuartoPiece with all attributes defined as fields.

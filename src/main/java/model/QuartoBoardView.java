@@ -19,23 +19,27 @@ public class QuartoBoardView extends QuartoBoard {
 
     @Override
     public QuartoPiece[][] getBoard() {
-        // TODO make a copy of this
-        return source.getBoard();
+        return Arrays.copyOf(source.getBoard(), source.getBoard().length);
     }
 
     @Override
-    public QuartoPiece getPieceAtCell(final int x, final int y) {
-        return source.getPieceAtCell(x, y);
+    public QuartoPiece getPieceAtCell(final Coordinates coordinates) {
+        return source.getPieceAtCell(coordinates);
     }
 
     @Override
-    public boolean isOccupied(final int x, final int y) {
-        return source.isOccupied(x, y);
+    public boolean isOccupied(final Coordinates coordinates) {
+        return source.isOccupied(coordinates);
     }
 
     @Override
-    public void placePiece(final QuartoPiece piece, final int x, final int y) {
+    public void placePiece(final QuartoPiece piece, final Coordinates coordinates) {
         throw new UnsupportedOperationException("Cannot modify state of board");
+    }
+
+    @Override
+    public String printBoard() {
+        return printBoard(source.getBoard());
     }
 
 }

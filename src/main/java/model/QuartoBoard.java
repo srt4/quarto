@@ -17,32 +17,44 @@ public class QuartoBoard {
     }
 
     public QuartoPiece[][] getBoard() {
-        return Arrays.copyOf(board, board.length);
+        return board;
     }
 
-    public QuartoPiece getPieceAtCell(final int x, final int y) {
-        return board[x][y];
+    public QuartoPiece getPieceAtCell(final Coordinates coordinates) {
+        checkCoordinates(coordinates);
+        return board[coordinates.getX() - 1][coordinates.getY() - 1];
     }
 
-    public boolean isOccupied(final int x, final int y) {
-        return board[x - 1][y - 1] != null;
+    public boolean isOccupied(final Coordinates coordinates) {
+        checkCoordinates(coordinates);
+        return board[coordinates.getX() - 1][coordinates.getY() - 1] != null;
     }
 
-    public void placePiece(final QuartoPiece piece, final int x, final int y) {
-        board[x - 1][y - 1] = piece;
+    public void placePiece(final QuartoPiece piece, final Coordinates coordinates) {
+        checkCoordinates(coordinates);
+        if (isOccupied(coordinates)) {
+            throw new IllegalArgumentException("Space is occupied");
+        }
+        board[coordinates.getX() - 1][coordinates.getY() - 1] = piece;
     }
 
     public String printBoard() {
+        return printBoard(board);
+    }
+
+    protected String printBoard(final QuartoPiece[][] quartoBoard) {
         final StringBuilder sb = new StringBuilder();
-        sb.append("  ").append(Strings.repeat("-", 19)).append("\n");
-        for (int y = 0; y < board.length; y++) {
-            for (int x = 0; x < board[y].length; x++) {
-                sb.append(" | ").append(board[y][x] ==  null ? "  " : board[y][x]);
-                if (x == board[y].length - 1) {
+        sb.append("     A    B    C    D\n");
+        sb.append("    ").append(Strings.repeat("-", 19)).append("\n");
+        for (int y = 0; y < quartoBoard.length; y++) {
+            sb.append(y + 1).append(" ");
+            for (int x = 0; x < quartoBoard[y].length; x++) {
+                sb.append(" | ").append(quartoBoard[x][y] ==  null ? "  " : quartoBoard[x][y]);
+                if (x == quartoBoard[y].length - 1) {
                     sb.append(" | ");
                 }
             }
-            sb.append("\n  ").append(Strings.repeat("-", 19)).append("\n");
+            sb.append("\n    ").append(Strings.repeat("-", 19)).append("\n");
         }
         return sb.toString();
     }
@@ -58,6 +70,13 @@ public class QuartoBoard {
 
     public int getDimensionY() {
         return dimensionY;
+    }
+
+    private void checkCoordinates(final Coordinates coordinates) {
+        if (coordinates == null || coordinates.getX() > board.length || coordinates.getY() > board[0].length
+                || coordinates.getX() < 1 || coordinates.getY() < 1) {
+            throw new IllegalArgumentException("Invalid coordinates passed");
+        }
     }
 
 }
