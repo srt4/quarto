@@ -1,7 +1,7 @@
-import controller.CliPlayer;
+import model.Board;
+import player.interactive.CliPlayer;
 import model.Coordinates;
-import model.QuartoBoard;
-import model.QuartoPiece;
+import model.Piece;
 import model.attribute.Fill;
 import model.attribute.Height;
 import model.attribute.Hue;
@@ -9,21 +9,19 @@ import model.attribute.Shape;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.After;
 import org.junit.Test;
 import java.util.Scanner;
 import java.io.ByteArrayInputStream;
-import java.util.InputMismatchException;
 
 public class TestCliPlayer {
 
-    private QuartoPiece piece;
-    private QuartoBoard board;
+    private Piece piece;
+    private Board board;
 
     @Before
     public void setup() {
-        this.piece = new QuartoPiece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE);
-        this.board = new QuartoBoard();
+        this.piece = new Piece(Hue.LIGHT, Height.SHORT, Fill.HOLLOW, Shape.CUBE);
+        this.board = new Board();
     }
 
     @Test

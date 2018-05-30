@@ -1,6 +1,6 @@
-import controller.CliPlayer;
-import controller.DillyPlayer;
-import controller.Player;
+import player.interactive.CliPlayer;
+import player.robotic.ChaosPlayer;
+import player.Player;
 import controller.QuartoGame;
 
 import java.util.Scanner;
@@ -14,13 +14,13 @@ public class App {
 
     private static Player getPlayer(final String playerName, final Scanner scanner) {
         do {
-            System.out.println("Enter player type for " + playerName + ": {CliPlayer, DillyPlayer}");
+            System.out.println("Enter player type for " + playerName + ": {CliPlayer, ChaosPlayer}");
             final String playerType = scanner.nextLine();
             if (playerType.equalsIgnoreCase(CliPlayer.class.getSimpleName())) {
                 return new CliPlayer(new Scanner(System.in), playerName);
             }
-            else if (playerType.equalsIgnoreCase(DillyPlayer.class.getSimpleName())) {
-                return new DillyPlayer();
+            else if (playerType.equalsIgnoreCase(ChaosPlayer.class.getSimpleName())) {
+                return new ChaosPlayer();
             }
         }
         while (true);

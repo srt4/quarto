@@ -1,10 +1,10 @@
-package controller;
+package player.interactive;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
+import model.Board;
 import model.Coordinates;
-import model.QuartoBoard;
-import model.QuartoPiece;
+import model.Piece;
+import player.Player;
 
 
 import java.util.List;
@@ -20,13 +20,13 @@ public class CliPlayer implements Player {
         this.playerName = playerName;
     }
 
-    public QuartoPiece selectPiece(List<QuartoPiece> pieces, QuartoBoard board) {
+    public Piece selectPiece(List<Piece> pieces, Board board) {
         System.out.println();
         System.out.println(board.printBoard());
         printMessage("Select piece for next player: ");
 
         int i = 0;
-        for (final QuartoPiece piece : pieces) {
+        for (final Piece piece : pieces) {
             System.out.print(" [" + (++i < 10 ? " " + i : i) + "] " + piece + "    ");
 
             // print four pieces per line, and after last piece
@@ -38,7 +38,7 @@ public class CliPlayer implements Player {
         return pieces.get(getIntInBounds(1, i) - 1);
     }
 
-    public Coordinates selectCoordinates(QuartoPiece piece, QuartoBoard board) {
+    public Coordinates selectCoordinates(Piece piece, Board board) {
         System.out.println();
         System.out.println();
         System.out.println();

@@ -7,9 +7,9 @@ import model.attribute.Shape;
 import model.util.PieceToStringHelper;
 
 /**
- * Represents a QuartoPiece with all attributes defined as fields.
+ * Represents a Piece with all attributes defined as fields.
  */
-public class QuartoPiece {
+public class Piece {
 
     private final Hue hue;
     private final Height height;
@@ -17,7 +17,7 @@ public class QuartoPiece {
     private final Shape shape;
     private final int bitmask;
 
-    public QuartoPiece(final Hue hue, final Height height, final Fill fill, final Shape shape) {
+    public Piece(final Hue hue, final Height height, final Fill fill, final Shape shape) {
         this.hue = hue;
         this.height = height;
         this.fill = fill;

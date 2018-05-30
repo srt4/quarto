@@ -3,27 +3,27 @@ package model;
 import java.util.Arrays;
 
 /**
- * A view of a QuartoBoard with no modifications possible.
+ * A view of a Board with no modifications possible.
  */
-public class QuartoBoardView extends QuartoBoard {
+public class BoardView extends Board {
 
-    private final QuartoBoard source;
+    private final Board source;
 
-    public static QuartoBoardView of(final QuartoBoard source) {
-        return new QuartoBoardView(source);
+    public static BoardView of(final Board source) {
+        return new BoardView(source);
     }
 
-    private QuartoBoardView(final QuartoBoard source) {
+    private BoardView(final Board source) {
         this.source = source;
     }
 
     @Override
-    public QuartoPiece[][] getBoard() {
+    public Piece[][] getBoard() {
         return Arrays.copyOf(source.getBoard(), source.getBoard().length);
     }
 
     @Override
-    public QuartoPiece getPieceAtCell(final Coordinates coordinates) {
+    public Piece getPieceAtCell(final Coordinates coordinates) {
         return source.getPieceAtCell(coordinates);
     }
 
@@ -33,7 +33,7 @@ public class QuartoBoardView extends QuartoBoard {
     }
 
     @Override
-    public void placePiece(final QuartoPiece piece, final Coordinates coordinates) {
+    public void placePiece(final Piece piece, final Coordinates coordinates) {
         throw new UnsupportedOperationException("Cannot modify state of board");
     }
 

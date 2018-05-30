@@ -1,32 +1,32 @@
 package controller;
 
-import model.Coordinates;
-import model.QuartoBoard;
-import model.QuartoBoardView;
-import model.QuartoPiece;
-import model.QuartoPieces;
+import model.*;
+import model.Piece;
+import player.interactive.CliPlayer;
+import player.robotic.ChaosPlayer;
+import player.Player;
 
 import java.util.Scanner;
 
 public class QuartoGame {
 
-    private final QuartoBoard board;
-    private final QuartoPieces availablePieces;
+    private final Board board;
+    private final Pieces availablePieces;
     private final Player p1;
     private final Player p2;
 
     public QuartoGame(final Player player1, final Player player2) {
-        this.board = new QuartoBoard();
-        this.availablePieces = new QuartoPieces();
+        this.board = new Board();
+        this.availablePieces = new Pieces();
         this.p1 = player1;
         this.p2 = player2;
     }
 
     public QuartoGame() {
-        this.board = new QuartoBoard();
-        this.availablePieces = new QuartoPieces();
+        this.board = new Board();
+        this.availablePieces = new Pieces();
         this.p1 = new CliPlayer(new Scanner(System.in), "P1"); // TODO: Is there where you'd have a factory?
-        this.p2 = new DillyPlayer();
+        this.p2 = new ChaosPlayer();
     }
 
     public void play() {
@@ -39,9 +39,9 @@ public class QuartoGame {
          *  - Current player places piece on board
          */
         while (!winConditionMet()) {
-            final QuartoPiece selectedPiece = selectPiece(availablePieces, QuartoBoardView.of(board), previousPlayer);
+            final Piece selectedPiece = selectPiece(availablePieces, BoardView.of(board), previousPlayer);
 
-            final Coordinates move = selectCoordinates(selectedPiece, QuartoBoardView.of(board), currentPlayer);
+            final Coordinates move = selectCoordinates(selectedPiece, BoardView.of(board), currentPlayer);
             board.placePiece(selectedPiece, move);
             availablePieces.remove(selectedPiece);
 
@@ -53,18 +53,18 @@ public class QuartoGame {
         System.out.println("Winning player is " + (previousPlayer == p1 ? "P1!" : "P2!"));
     }
 
-    private Coordinates selectCoordinates(final QuartoPiece piece, final QuartoBoard board, final Player player) {
+    private Coordinates selectCoordinates(final Piece piece, final Board board, final Player player) {
         Coordinates coordinates;
 
-        while (board.isOccupied((coordinates = player.selectCoordinates(piece, QuartoBoardView.of(board))))) {
+        while (board.isOccupied((coordinates = player.selectCoordinates(piece, BoardView.of(board))))) {
             System.out.println("Coordinates occupied");
         }
 
         return coordinates;
     }
 
-    private QuartoPiece selectPiece(final QuartoPieces pieces, final QuartoBoard board, final Player player) {
-        QuartoPiece piece;
+    private Piece selectPiece(final Pieces pieces, final Board board, final Player player) {
+        Piece piece;
 
         while (!pieces.contains((piece = player.selectPiece(pieces.get(), board)))) {
             System.out.println("Piece unavailable");
@@ -74,7 +74,7 @@ public class QuartoGame {
     }
 
     private boolean winConditionMet() {
-        QuartoPiece[][] quartoBoard = board.getBoard();
+        Piece[][] quartoBoard = board.getBoard();
         // left to right
         for (int y = 0; y < quartoBoard[0].length; y++) {
             int sum = 0b1111111;

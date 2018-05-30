@@ -1,11 +1,10 @@
 package model.util;
 
-import model.QuartoPiece;
-import model.util.ConsoleColors;
+import model.Piece;
 
 public final class PieceToStringHelper {
 
-    public static String toString(final QuartoPiece piece) {
+    public static String toString(final Piece piece) {
         final StringBuilder sb = new StringBuilder();
 
         switch (piece.getHue()) {

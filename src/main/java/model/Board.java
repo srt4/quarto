@@ -2,25 +2,23 @@ package model;
 
 import com.google.common.base.Strings;
 
-import java.util.Arrays;
+public class Board {
 
-public class QuartoBoard {
-
-    private final QuartoPiece[][] board;
+    private final Piece[][] board;
     private final int dimensionX;
     private final int dimensionY;
 
-    public QuartoBoard() {
+    public Board() {
         this.dimensionX = 4;
         this.dimensionY = 4;
-        this.board = new QuartoPiece[dimensionX][dimensionY];
+        this.board = new Piece[dimensionX][dimensionY];
     }
 
-    public QuartoPiece[][] getBoard() {
+    public Piece[][] getBoard() {
         return board;
     }
 
-    public QuartoPiece getPieceAtCell(final Coordinates coordinates) {
+    public Piece getPieceAtCell(final Coordinates coordinates) {
         checkCoordinates(coordinates);
         return board[coordinates.getX() - 1][coordinates.getY() - 1];
     }
@@ -30,7 +28,7 @@ public class QuartoBoard {
         return board[coordinates.getX() - 1][coordinates.getY() - 1] != null;
     }
 
-    public void placePiece(final QuartoPiece piece, final Coordinates coordinates) {
+    public void placePiece(final Piece piece, final Coordinates coordinates) {
         checkCoordinates(coordinates);
         if (isOccupied(coordinates)) {
             throw new IllegalArgumentException("Space is occupied");
@@ -42,7 +40,7 @@ public class QuartoBoard {
         return printBoard(board);
     }
 
-    protected String printBoard(final QuartoPiece[][] quartoBoard) {
+    protected String printBoard(final Piece[][] quartoBoard) {
         final StringBuilder sb = new StringBuilder();
         sb.append("     A    B    C    D\n");
         sb.append("    ").append(Strings.repeat("-", 19)).append("\n");
@@ -61,7 +59,7 @@ public class QuartoBoard {
 
     @Override
     public String toString() {
-        return "QuartoBoard<" + hashCode() + ">\n" + printBoard();
+        return "Board<" + hashCode() + ">\n" + printBoard();
     }
 
     public int getDimensionX() {
